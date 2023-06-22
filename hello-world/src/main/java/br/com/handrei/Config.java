@@ -6,8 +6,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class Config {
 
-    @Bean(name = "applicationName")
+    @Bean(name = "applicationNameByConfiguration")
     public String applicationName() {
-        return "Vendas Application";
+        return "Vendas Application by Configuration";
     }
 }
