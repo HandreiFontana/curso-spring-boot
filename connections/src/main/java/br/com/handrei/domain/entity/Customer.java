@@ -1,8 +1,17 @@
 package br.com.handrei.domain.entity;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "customers")
 public class Customer {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Integer id;
+
+    @Column(name = "name", length = 100)
     private String name;
 
     public Customer(Integer id, String name) {

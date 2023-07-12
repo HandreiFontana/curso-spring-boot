@@ -1,10 +1,12 @@
 package br.com.handrei.domain.repository;
 
 import br.com.handrei.domain.entity.Customer;
+import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,7 +15,6 @@ import java.util.List;
 @Repository
 public class Customers {
 
-    private static String INSERT = "INSERT INTO customers (name) VALUES (?)";
     private static String UPDATE = "UPDATE customers SET name = ? WHERE id = ?";
     private static String SELECT_ALL = "SELECT * FROM customers";
     private static String DELETE = "DELETE FROM customers WHERE id = ?";
@@ -21,8 +22,12 @@ public class Customers {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    private EntityManager entityManager;
+
+    @Transactional
     public Customer create(Customer customer) {
-        jdbcTemplate.update( INSERT, new Object[]{customer.getName()} );
+        entityManager.persist(customer);
         return customer;
     }
 
