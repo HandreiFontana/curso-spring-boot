@@ -24,6 +24,29 @@ public class VendasApplication {
 
             List<Customer> allCustomers = customers.list();
             allCustomers.forEach(System.out::println);
+
+            allCustomers.forEach(c -> {
+                c.setName(c.getName() + " updated");
+                customers.update(c);
+            });
+
+            allCustomers = customers.list();
+            allCustomers.forEach(System.out::println);
+
+            customers.list("ile").forEach(System.out::println);
+
+            allCustomers.forEach(c -> {
+                customers.delete(c);
+                System.out.println(c + " deletado");
+            });
+
+            allCustomers = customers.list();
+
+            if (allCustomers.isEmpty()) {
+                System.out.println("Nenhum cliente encontrado");
+            } else {
+                allCustomers.forEach(System.out::println);
+            }
         };
     }
 
