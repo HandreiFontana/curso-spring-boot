@@ -25,6 +25,9 @@ public class VendasApplication {
             List<Customer> allCustomers = customers.findAll();
             allCustomers.forEach(System.out::println);
 
+            boolean exists = customers.existsByName("Milena");
+            System.out.println(exists);
+
             allCustomers.forEach(c -> {
                 c.setName(c.getName() + " updated");
                 customers.save(c);
@@ -33,7 +36,7 @@ public class VendasApplication {
             allCustomers = customers.findAll();
             allCustomers.forEach(System.out::println);
 
-            customers.findByNameLike("ile").forEach(System.out::println);
+            customers.findByNameLike("%ile%").forEach(System.out::println);
 
             allCustomers.forEach(c -> {
                 customers.delete(c);
