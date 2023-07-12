@@ -1,15 +1,12 @@
-package br.com.handrei.service;
+package br.com.handrei;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 
-@Configuration
-@Profile("production")
+@Production
 public class ProductionConfig {
 
-    @Bean
+    @Bean(name = "execProduction")
     public CommandLineRunner exec() {
         return args -> {
             System.out.println("Running Production");
