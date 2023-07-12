@@ -17,30 +17,30 @@ public class VendasApplication {
     public CommandLineRunner init(@Autowired Customers customers) {
         return args -> {
             Customer customer = new Customer("Handrei");
-            customers.create(customer);
+            customers.save(customer);
 
             Customer customer2 = new Customer("Milena");
-            customers.create(customer2);
+            customers.save(customer2);
 
-            List<Customer> allCustomers = customers.list();
+            List<Customer> allCustomers = customers.findAll();
             allCustomers.forEach(System.out::println);
 
             allCustomers.forEach(c -> {
                 c.setName(c.getName() + " updated");
-                customers.update(c);
+                customers.save(c);
             });
 
-            allCustomers = customers.list();
+            allCustomers = customers.findAll();
             allCustomers.forEach(System.out::println);
 
-            customers.list("ile").forEach(System.out::println);
+            customers.findByNameLike("ile").forEach(System.out::println);
 
             allCustomers.forEach(c -> {
                 customers.delete(c);
                 System.out.println(c + " deletado");
             });
 
-            allCustomers = customers.list();
+            allCustomers = customers.findAll();
 
             if (allCustomers.isEmpty()) {
                 System.out.println("Nenhum cliente encontrado");
