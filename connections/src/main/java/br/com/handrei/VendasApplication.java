@@ -37,6 +37,7 @@ public class VendasApplication {
             allCustomers.forEach(System.out::println);
 
             customers.findByNameLike("%ile%").forEach(System.out::println);
+            customers.encontrarPorNome("%ile%").forEach(System.out::println);
 
             allCustomers.forEach(c -> {
                 customers.delete(c);
