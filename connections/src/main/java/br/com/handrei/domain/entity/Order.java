@@ -22,7 +22,7 @@ public class Order {
     @Column(name = "order_date")
     private LocalDate orderDate;
 
-    @Column(name = "order_value", length = 20, precision = 2)
+    @Column(name = "order_value", precision = 20, scale = 2)
     private BigDecimal orderValue;
 
     @OneToMany(mappedBy = "order")
@@ -56,4 +56,12 @@ public class Order {
         this.customer = customerId;
     }
 
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", orderDate=" + orderDate +
+                ", orderValue=" + orderValue +
+                '}';
+    }
 }

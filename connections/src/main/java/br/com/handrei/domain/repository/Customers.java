@@ -24,4 +24,7 @@ public interface Customers extends JpaRepository<Customer, Integer> {
     void deleteByName(String name);
 
     boolean existsByName(String name);
+
+    @Query("select c from Customer c left join fetch c.orders where c.id = :id")
+    Customer findCustomerFetchOrders(@Param("id") Integer id);
 }
