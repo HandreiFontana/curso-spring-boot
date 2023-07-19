@@ -1,19 +1,33 @@
 package br.com.handrei.api.controller;
 
+import br.com.handrei.domain.entity.Customer;
+import br.com.handrei.domain.repository.Customers;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/customers")
 public class CustomerController {
 
-    @RequestMapping(value = "/hello/{name}", method = RequestMethod.GET)
+    private Customers customers;
+
+    public CustomerController(Customers customers) {
+        this.customers = customers;
+    }
+
+    @GetMapping("/{id}")
     @ResponseBody
-    public String helloCustomers(@PathVariable("name") String customerName) {
-      return String.format("Hello %s", customerName);
+    public ResponseEntity get(@PathVariable Integer id) {
+      Optional<Customer> customer = customers.findById(id);
+
+      if (customer.isPresent()) {
+          return ResponseEntity.ok(customer.get());
+      }
+
+      return ResponseEntity.notFound().build();
     }
 
 }
