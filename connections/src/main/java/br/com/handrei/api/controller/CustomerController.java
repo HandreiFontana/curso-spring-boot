@@ -37,17 +37,29 @@ public class CustomerController {
         return ResponseEntity.ok(customerResponse);
     }
 
+    @PutMapping("/{id}")
+    @ResponseBody
+    public ResponseEntity update(@PathVariable Integer id, @RequestBody Customer customer) {
+        return customers
+                .findById(id)
+                .map(customerResult -> {
+                    customer.setId(customerResult.getId());
+                    customers.save(customer);
+                    return ResponseEntity.noContent().build();
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
     @DeleteMapping("/{id}")
     @ResponseBody
     public ResponseEntity delete(@PathVariable Integer id) {
-        Optional<Customer> customer = customers.findById(id);
-
-        if (customer.isPresent()) {
-            customers.delete(customer.get());
-            return ResponseEntity.noContent().build();
-        }
-
-        return ResponseEntity.notFound().build();
+        return customers
+                .findById(id)
+                .map(customerResult -> {
+                    customers.delete(customerResult);
+                    return ResponseEntity.noContent().build();
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
 }
