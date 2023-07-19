@@ -30,4 +30,11 @@ public class CustomerController {
       return ResponseEntity.notFound().build();
     }
 
+    @PostMapping("/")
+    @ResponseBody
+    public ResponseEntity create(@RequestBody Customer customer) {
+        Customer customerResponse = customers.save(customer);
+        return ResponseEntity.ok(customerResponse);
+    }
+
 }
