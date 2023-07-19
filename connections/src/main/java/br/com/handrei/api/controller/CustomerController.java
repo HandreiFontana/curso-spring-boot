@@ -37,4 +37,17 @@ public class CustomerController {
         return ResponseEntity.ok(customerResponse);
     }
 
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    public ResponseEntity delete(@PathVariable Integer id) {
+        Optional<Customer> customer = customers.findById(id);
+
+        if (customer.isPresent()) {
+            customers.delete(customer.get());
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
 }
