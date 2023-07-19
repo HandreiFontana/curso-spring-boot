@@ -2,10 +2,13 @@ package br.com.handrei.api.controller;
 
 import br.com.handrei.domain.entity.Customer;
 import br.com.handrei.domain.repository.Customers;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -16,6 +19,21 @@ public class CustomerController {
 
     public CustomerController(Customers customers) {
         this.customers = customers;
+    }
+
+    @GetMapping("/")
+    @ResponseBody
+    public ResponseEntity search(Customer search) {
+        ExampleMatcher matcher = ExampleMatcher
+                .matching()
+                .withIgnoreCase()
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+
+        Example example = Example.of(search, matcher);
+
+        List<Customer> customersResponse = customers.findAll(example);
+
+        return ResponseEntity.ok(customersResponse);
     }
 
     @GetMapping("/{id}")
