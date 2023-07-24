@@ -14,10 +14,10 @@ import java.util.List;
 @RequestMapping("/products")
 public class ProductController {
 
-    private Products products;
+    private Products repository;
 
     public ProductController(Products products) {
-        this.products = products;
+        this.repository = products;
     }
 
     @GetMapping("/")
@@ -29,12 +29,12 @@ public class ProductController {
 
         Example example = Example.of(search, matcher);
 
-        return products.findAll(example);
+        return repository.findAll(example);
     }
 
     @GetMapping("/{id}")
     public Product get(@PathVariable Integer id) {
-        return products
+        return repository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
     }
@@ -42,17 +42,17 @@ public class ProductController {
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     public Product create(@RequestBody Product product) {
-        return products.save(product);
+        return repository.save(product);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@PathVariable Integer id, @RequestBody Product product) {
-        products
+        repository
                 .findById(id)
                 .map(productResult -> {
                     product.setId(productResult.getId());
-                    products.save(product);
+                    repository.save(product);
                     return product;
                 })
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
@@ -61,10 +61,10 @@ public class ProductController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Integer id) {
-        products
+        repository
                 .findById(id)
                 .map(productResult -> {
-                    products.delete(productResult);
+                    repository.delete(productResult);
                     return productResult;
                 })
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));

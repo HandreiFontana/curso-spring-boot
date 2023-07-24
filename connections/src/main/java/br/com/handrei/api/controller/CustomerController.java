@@ -14,10 +14,10 @@ import java.util.List;
 @RequestMapping("/customers")
 public class CustomerController {
 
-    private Customers customers;
+    private Customers repository;
 
     public CustomerController(Customers customers) {
-        this.customers = customers;
+        this.repository = customers;
     }
 
     @GetMapping("/")
@@ -29,12 +29,12 @@ public class CustomerController {
 
         Example example = Example.of(search, matcher);
 
-        return customers.findAll(example);
+        return repository.findAll(example);
     }
 
     @GetMapping("/{id}")
     public Customer get(@PathVariable Integer id) {
-      return customers
+      return repository
               .findById(id)
               .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found"));
     }
@@ -42,17 +42,17 @@ public class CustomerController {
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     public Customer create(@RequestBody Customer customer) {
-        return customers.save(customer);
+        return repository.save(customer);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@PathVariable Integer id, @RequestBody Customer customer) {
-        customers
+        repository
                 .findById(id)
                 .map(customerResult -> {
                     customer.setId(customerResult.getId());
-                    customers.save(customer);
+                    repository.save(customer);
                     return customer;
                 })
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found"));
@@ -61,10 +61,10 @@ public class CustomerController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Integer id) {
-        customers
+        repository
                 .findById(id)
                 .map(customerResult -> {
-                    customers.delete(customerResult);
+                    repository.delete(customerResult);
                     return customerResult;
                 })
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found"));

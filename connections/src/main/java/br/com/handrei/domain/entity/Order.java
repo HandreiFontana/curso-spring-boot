@@ -1,11 +1,17 @@
 package br.com.handrei.domain.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Set;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "orders")
 public class Order {
@@ -27,41 +33,4 @@ public class Order {
 
     @OneToMany(mappedBy = "order")
     private Set<OrderItem> orderItems;
-
-    public Integer getId() { return id; }
-
-    public void setId(Integer id) { this.id = id; }
-
-    public Customer getCustomer() { return customer; }
-
-    public void setCustomer(Customer customer) { this.customer = customer; }
-
-    public Set<OrderItem> getOrderItems() { return orderItems; }
-
-    public void setOrderItems(Set<OrderItem> orderItems) { this.orderItems = orderItems; }
-
-    public LocalDate getOrderDate() { return orderDate; }
-
-    public void setOrderDate(LocalDate orderDate) { this.orderDate = orderDate; }
-
-    public BigDecimal getOrderValue() { return orderValue; }
-
-    public void setOrderValue(BigDecimal orderValue) { this.orderValue = orderValue; }
-
-    public Customer getCustomerId() {
-        return customer;
-    }
-
-    public void setCustomerId(Customer customerId) {
-        this.customer = customerId;
-    }
-
-    @Override
-    public String toString() {
-        return "Order{" +
-                "id=" + id +
-                ", orderDate=" + orderDate +
-                ", orderValue=" + orderValue +
-                '}';
-    }
 }

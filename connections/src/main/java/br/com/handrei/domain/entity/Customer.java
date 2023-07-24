@@ -2,9 +2,15 @@ package br.com.handrei.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "customers")
 public class Customer {
@@ -27,43 +33,5 @@ public class Customer {
     public Customer(Integer id, String name) {
         this.id = id;
         this.name = name;
-    }
-
-    public Customer() { }
-
-    public Customer(String name) {
-        this.name = name;
-    }
-
-    public String getCpf() { return cpf; }
-
-    public void setCpf(String cpf) { this.cpf = cpf; }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Set<Order> getOrders() { return orders; }
-
-    public void setOrders(Set<Order> orders) { this.orders = orders; }
-
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
     }
 }
