@@ -1,5 +1,6 @@
 package br.com.handrei.domain.entity;
 
+import br.com.handrei.domain.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,6 +32,10 @@ public class Order {
 
     @Column(name = "order_value", precision = 20, scale = 2)
     private BigDecimal orderValue;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private OrderStatus status;
 
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems;

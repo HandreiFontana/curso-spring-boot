@@ -6,10 +6,12 @@ import br.com.handrei.domain.entity.Customer;
 import br.com.handrei.domain.entity.Order;
 import br.com.handrei.domain.entity.OrderItem;
 import br.com.handrei.domain.entity.Product;
+import br.com.handrei.domain.enums.OrderStatus;
 import br.com.handrei.domain.repository.Customers;
 import br.com.handrei.domain.repository.OrderItems;
 import br.com.handrei.domain.repository.Orders;
 import br.com.handrei.domain.repository.Products;
+import br.com.handrei.exception.OrderNotFoundException;
 import br.com.handrei.exception.UseCaseException;
 import br.com.handrei.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -44,6 +46,7 @@ public class OrderServiceImpl implements OrderService {
         order.setOrderValue(dto.getOrderValue());
         order.setOrderDate(LocalDate.now());
         order.setCustomer(customer);
+        order.setStatus(OrderStatus.FINISHED);
 
         Set<OrderItem> orderItems = convertItems(order, dto.getItems());
 
@@ -56,6 +59,18 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Optional<Order> get(Integer id) {
         return repository.findByIdFetchOrderItems(id);
+    }
+
+    @Override
+    @Transactional
+    public void updateStatus(Integer id, OrderStatus status) {
+        repository
+                .findById(id)
+                .map(order -> {
+                    order.setStatus(status);
+                    return repository.save(order);
+                })
+                .orElseThrow(() -> new OrderNotFoundException());
     }
 
     private Set<OrderItem> convertItems(Order order, List<OrderItemDTO> items) {

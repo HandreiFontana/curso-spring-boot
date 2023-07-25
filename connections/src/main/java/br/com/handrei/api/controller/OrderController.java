@@ -3,9 +3,12 @@ package br.com.handrei.api.controller;
 import br.com.handrei.api.dto.InfoOrderDTO;
 import br.com.handrei.api.dto.InfoOrderItemDTO;
 import br.com.handrei.api.dto.OrderDTO;
+import br.com.handrei.api.dto.UpdateOrderStatusDTO;
 import br.com.handrei.domain.entity.Order;
 import br.com.handrei.domain.entity.OrderItem;
+import br.com.handrei.domain.enums.OrderStatus;
 import br.com.handrei.service.OrderService;
+import org.hibernate.sql.Update;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
@@ -43,6 +46,13 @@ public class OrderController {
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Order not found"));
     }
 
+    @PatchMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateStatus(@PathVariable Integer id, @RequestBody UpdateOrderStatusDTO dto) {
+        String status = dto.getStatus();
+        service.updateStatus(id, OrderStatus.valueOf(status));
+    }
+
     private InfoOrderDTO convert(Order order) {
         return InfoOrderDTO
                 .builder()
@@ -51,6 +61,7 @@ public class OrderController {
                 .cpf(order.getCustomer().getCpf())
                 .customerName(order.getCustomer().getName())
                 .orderValue(order.getOrderValue())
+                .status(order.getStatus().name())
                 .items(convert(order.getOrderItems()))
                 .build();
     }

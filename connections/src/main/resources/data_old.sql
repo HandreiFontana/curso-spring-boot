@@ -1,6 +1,7 @@
 CREATE TABLE customers (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(100)
+    name VARCHAR(100),
+    cpf VARCHAR(11)
 );
 
 CREATE TABLE products (
@@ -13,6 +14,7 @@ CREATE TABLE orders (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     customer_id INTEGER REFERENCES customers (id),
     order_date TIMESTAMP,
+    status VARCHAR(20),
     order_value NUMERIC(20, 2)
 );
 
