@@ -16,8 +16,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.text.html.Option;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -49,6 +51,11 @@ public class OrderServiceImpl implements OrderService {
         orderItemsRepository.saveAll(orderItems);
 
         return order;
+    }
+
+    @Override
+    public Optional<Order> get(Integer id) {
+        return repository.findByIdFetchOrderItems(id);
     }
 
     private Set<OrderItem> convertItems(Order order, List<OrderItemDTO> items) {

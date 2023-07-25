@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -32,5 +33,5 @@ public class Order {
     private BigDecimal orderValue;
 
     @OneToMany(mappedBy = "order")
-    private Set<OrderItem> orderItems;
+    private List<OrderItem> orderItems;
 }
