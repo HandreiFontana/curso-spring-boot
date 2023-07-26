@@ -8,6 +8,7 @@ import br.com.handrei.domain.entity.Order;
 import br.com.handrei.domain.entity.OrderItem;
 import br.com.handrei.domain.enums.OrderStatus;
 import br.com.handrei.service.OrderService;
+import jakarta.validation.Valid;
 import org.hibernate.sql.Update;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.CollectionUtils;
@@ -33,7 +34,7 @@ public class OrderController {
 
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
-    public Integer create(@RequestBody OrderDTO dto) {
+    public Integer create(@RequestBody @Valid OrderDTO dto) {
         Order order = service.create(dto);
         return order.getId();
     }
