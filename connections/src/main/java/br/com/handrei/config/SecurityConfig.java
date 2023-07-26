@@ -27,7 +27,7 @@ public class SecurityConfig {
         return new InMemoryUserDetailsManager(
                 User.withUsername("admin")
                         .password(passwordEncoder().encode("admin"))
-                        .authorities("read")
+                        .roles("ADMIN")
                         .build()
         );
     }
@@ -36,7 +36,11 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(csrf -> csrf.disable())
-                .authorizeRequests(auth -> auth.requestMatchers("/customers/**").permitAll())
+                .authorizeRequests(auth -> auth
+                        .requestMatchers("/customers/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/products/**").hasRole("ADMIN")
+                        .requestMatchers("/orders/**").hasAnyRole("USER", "ADMIN")
+                )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .httpBasic(withDefaults())
                 .build();
