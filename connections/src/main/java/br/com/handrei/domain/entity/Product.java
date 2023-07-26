@@ -20,10 +20,10 @@ public class Product {
     private Integer id;
 
     @Column(name = "description")
-    @NotEmpty(message = "Description is required!")
+    @NotEmpty(message = "{field.description.required}")
     private String description;
 
     @Column(name = "unit_value")
-    @NotNull(message = "Unit value is required!")
+    @NotNull(message = "{field.unit-value.required}")
     private BigDecimal unitValue;
 }

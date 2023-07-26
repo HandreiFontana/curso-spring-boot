@@ -14,12 +14,12 @@ import java.util.List;
 @AllArgsConstructor
 public class OrderDTO {
 
-    @NotNull(message = "Customer is required!")
+    @NotNull(message = "{field.customer.required}")
     private Integer customer;
 
-    @NotNull(message = "Order value is required!")
+    @NotNull(message = "{field.order-value.required}")
     private BigDecimal orderValue;
 
-    @NotEmptyList(message = "Order items is required!")
+    @NotEmptyList(message = "{field.order-items.required}")
     private List<OrderItemDTO> items;
 }
