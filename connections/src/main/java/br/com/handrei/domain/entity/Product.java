@@ -1,6 +1,8 @@
 package br.com.handrei.domain.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -18,8 +20,10 @@ public class Product {
     private Integer id;
 
     @Column(name = "description")
+    @NotEmpty(message = "Description is required!")
     private String description;
 
     @Column(name = "unit_value")
+    @NotNull(message = "Unit value is required!")
     private BigDecimal unitValue;
 }

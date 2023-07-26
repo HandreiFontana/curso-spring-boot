@@ -2,6 +2,7 @@ package br.com.handrei.api.controller;
 
 import br.com.handrei.domain.entity.Product;
 import br.com.handrei.domain.repository.Products;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
@@ -41,13 +42,13 @@ public class ProductController {
 
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
-    public Product create(@RequestBody Product product) {
+    public Product create(@RequestBody @Valid Product product) {
         return repository.save(product);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@PathVariable Integer id, @RequestBody Product product) {
+    public void update(@PathVariable Integer id, @RequestBody @Valid Product product) {
         repository
                 .findById(id)
                 .map(productResult -> {
