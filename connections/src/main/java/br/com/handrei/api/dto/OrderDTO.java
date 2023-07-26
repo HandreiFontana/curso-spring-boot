@@ -1,5 +1,6 @@
 package br.com.handrei.api.dto;
 
+import br.com.handrei.validation.NotEmptyList;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,5 +20,6 @@ public class OrderDTO {
     @NotNull(message = "Order value is required!")
     private BigDecimal orderValue;
 
+    @NotEmptyList(message = "Order items is required!")
     private List<OrderItemDTO> items;
 }
