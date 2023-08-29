@@ -24,3 +24,10 @@ CREATE TABLE order_items (
     product_id INTEGER REFERENCES products (id),
     quantity INTEGER
 );
+
+CREATE TABLE users (
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    login VARCHAR(50) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    is_admin BOOL DEFAULT FALSE
+);
